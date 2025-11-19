@@ -1,0 +1,3971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus360 - All-in-One Student Companion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bdf;
+            --secondary-color: #6c63ff;
+            --success-color: #4caf50;
+            --danger-color: #f44336;
+            --warning-color: #ff9800;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --gray-color: #6c757d;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Authentication Pages Styles */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6c63ff 0%, #4a6bdf 100%);
+            padding: 20px;
+        }
+
+        .auth-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            transition: var(--transition);
+        }
+
+        .auth-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-header h1 {
+            color: var(--primary-color);
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .auth-header p {
+            color: var(--gray-color);
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 107, 223, 0.2);
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--gray-color);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(74, 107, 223, 0.1);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+
+        .auth-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input {
+            margin-right: 10px;
+        }
+
+        .error-message {
+            color: var(--danger-color);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .password-strength {
+            height: 5px;
+            margin-top: 8px;
+            border-radius: 3px;
+            background-color: #eee;
+        }
+
+        .password-strength-meter {
+            height: 100%;
+            border-radius: 3px;
+            width: 0;
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        .weak {
+            width: 33%;
+            background-color: var(--danger-color);
+        }
+
+        .medium {
+            width: 66%;
+            background-color: var(--warning-color);
+        }
+
+        .strong {
+            width: 100%;
+            background-color: var(--success-color);
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+            background-color: #f5f7ff;
+        }
+
+        .navbar {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .navbar-brand i {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .user-name {
+            font-weight: 500;
+        }
+
+        .btn-logout {
+            background-color: transparent;
+            color: var(--gray-color);
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .btn-logout:hover {
+            background-color: #f8f9fa;
+            color: var(--dark-color);
+        }
+
+        .dashboard-content {
+            padding: 30px 0;
+        }
+
+        .dashboard-header {
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 32px;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .dashboard-header p {
+            color: var(--gray-color);
+            font-size: 16px;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-card-title {
+            font-size: 16px;
+            color: var(--gray-color);
+        }
+
+        .stat-card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .stat-card-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-card-change {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .stat-card-change.positive {
+            color: var(--success-color);
+        }
+
+        .stat-card-change.negative {
+            color: var(--danger-color);
+        }
+
+        /* Enhanced Attendance Card */
+        .attendance-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .attendance-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .attendance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .attendance-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .attendance-percentage {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .attendance-label {
+            font-size: 14px;
+            color: var(--gray-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .attendance-week {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .attendance-day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 40px;
+        }
+
+        .day-name {
+            font-size: 12px;
+            color: var(--gray-color);
+            margin-bottom: 5px;
+        }
+
+        .day-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .day-circle:hover {
+            transform: scale(1.1);
+        }
+
+        .day-circle.present {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: var(--success-color);
+            border: 2px solid var(--success-color);
+        }
+
+        .day-circle.absent {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: var(--danger-color);
+            border: 2px solid var(--danger-color);
+        }
+
+        .day-circle.leave {
+            background-color: rgba(255, 152, 0, 0.2);
+            color: var(--warning-color);
+            border: 2px solid var(--warning-color);
+        }
+
+        .day-circle.none {
+            background-color: #f8f9fa;
+            color: var(--gray-color);
+            border: 2px solid #eee;
+        }
+
+        .attendance-summary {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .attendance-stat {
+            text-align: center;
+            flex: 1;
+        }
+
+        .attendance-stat-label {
+            font-size: 12px;
+            color: var(--gray-color);
+            display: block;
+        }
+
+        .attendance-stat-value {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .attendance-stat-value.present {
+            color: var(--success-color);
+        }
+
+        .attendance-stat-value.absent {
+            color: var(--danger-color);
+        }
+
+        .attendance-stat-value.leave {
+            color: var(--warning-color);
+        }
+
+        .attendance-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .attendance-btn {
+            padding: 8px 16px;
+            font-size: 14px;
+            margin: 0 5px;
+        }
+
+        /* Assignment Card Styles */
+        .assignment-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .assignment-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .assignment-card-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .assignment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .assignment-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            background-color: #f8f9fa;
+            transition: var(--transition);
+        }
+
+        .assignment-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .assignment-checkbox {
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .assignment-details {
+            flex-grow: 1;
+        }
+
+        .assignment-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .assignment-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+
+        .assignment-subject {
+            display: flex;
+            align-items: center;
+        }
+
+        .assignment-subject i {
+            margin-right: 5px;
+            color: var(--primary-color);
+        }
+
+        .assignment-due {
+            display: flex;
+            align-items: center;
+        }
+
+        .assignment-due i {
+            margin-right: 5px;
+            color: var(--warning-color);
+        }
+
+        .assignment-status {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background-color: rgba(255, 152, 0, 0.2);
+            color: var(--warning-color);
+        }
+
+        .status-completed {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: var(--success-color);
+        }
+
+        .assignment-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-assignment {
+            background: none;
+            border: none;
+            color: var(--gray-color);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 5px;
+            transition: var(--transition);
+        }
+
+        .btn-assignment:hover {
+            color: var(--primary-color);
+        }
+
+        .btn-assignment.delete:hover {
+            color: var(--danger-color);
+        }
+
+        .empty-assignments {
+            text-align: center;
+            padding: 30px;
+            color: var(--gray-color);
+        }
+
+        .empty-assignments i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+
+        /* Assignment Modal Styles */
+        .assignment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .assignment-modal.show {
+            display: flex;
+        }
+
+        .assignment-modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        .assignment-modal-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .assignment-modal-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .assignment-modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--gray-color);
+            cursor: pointer;
+        }
+
+        .assignment-modal-body {
+            padding: 25px;
+        }
+
+        .assignment-form-group {
+            margin-bottom: 20px;
+        }
+
+        .assignment-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .assignment-form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .assignment-form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 107, 223, 0.2);
+        }
+
+        .assignment-form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .assignment-form-select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 107, 223, 0.2);
+        }
+
+        .assignment-modal-footer {
+            padding: 15px 25px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* Attendance Status Modal */
+        .attendance-status-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .attendance-status-modal.show {
+            display: flex;
+        }
+
+        .attendance-status-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 400px;
+            padding: 25px;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        .attendance-status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .attendance-status-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .attendance-status-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--gray-color);
+            cursor: pointer;
+        }
+
+        .attendance-status-date {
+            font-size: 16px;
+            color: var(--gray-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .attendance-status-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .attendance-status-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid #eee;
+        }
+
+        .attendance-status-option:hover {
+            background-color: #f8f9fa;
+        }
+
+        .attendance-status-option-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            color: white;
+        }
+
+        .attendance-status-option-icon.present {
+            background-color: var(--success-color);
+        }
+
+        .attendance-status-option-icon.absent {
+            background-color: var(--danger-color);
+        }
+
+        .attendance-status-option-icon.leave {
+            background-color: var(--warning-color);
+        }
+
+        .attendance-status-option-text {
+            font-weight: 500;
+        }
+
+        /* Full Calendar Modal */
+        .calendar-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .calendar-modal.show {
+            display: flex;
+        }
+
+        .calendar-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        .calendar-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .calendar-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .calendar-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--gray-color);
+            cursor: pointer;
+        }
+
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .calendar-month {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .calendar-nav-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .calendar-nav-btn:hover {
+            background-color: rgba(74, 107, 223, 0.1);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            padding: 15px 25px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 600;
+            color: var(--gray-color);
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            font-size: 14px;
+        }
+
+        .calendar-day:hover {
+            background-color: rgba(74, 107, 223, 0.1);
+        }
+
+        .calendar-day.other-month {
+            color: #ccc;
+        }
+
+        .calendar-day.today {
+            font-weight: 700;
+            border: 2px solid var(--primary-color);
+        }
+
+        .calendar-day.present {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: var(--success-color);
+        }
+
+        .calendar-day.absent {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: var(--danger-color);
+        }
+
+        .calendar-day.leave {
+            background-color: rgba(255, 152, 0, 0.2);
+            color: var(--warning-color);
+        }
+
+        .calendar-legend {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px 25px;
+            border-top: 1px solid #eee;
+            font-size: 12px;
+        }
+
+        .calendar-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .calendar-legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .calendar-legend-color.present {
+            background-color: var(--success-color);
+        }
+
+        .calendar-legend-color.absent {
+            background-color: var(--danger-color);
+        }
+
+        .calendar-legend-color.leave {
+            background-color: var(--warning-color);
+        }
+
+        .progress-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .progress-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .progress-card-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .progress-card-action {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .progress-card-action:hover {
+            text-decoration: underline;
+        }
+
+        .progress-item {
+            margin-bottom: 20px;
+        }
+
+        .progress-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-item-title {
+            font-weight: 500;
+        }
+
+        .progress-item-value {
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-description {
+            color: var(--gray-color);
+            font-size: 14px;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .feature-action {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .feature-action i {
+            margin-left: 5px;
+        }
+
+        .feature-action:hover {
+            text-decoration: underline;
+        }
+
+        /* AI Study Buddy Card with Chat */
+        .ai-study-buddy-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ai-study-buddy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-study-buddy-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .ai-study-buddy-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            margin-right: 15px;
+            background-color: #4a6bdf;
+        }
+
+        .ai-study-buddy-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .ai-study-buddy-description {
+            color: var(--gray-color);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .ai-chat-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #eee;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-bottom: 15px;
+            height: 300px;
+        }
+
+        .ai-chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: #f9f9f9;
+        }
+
+        .ai-message {
+            max-width: 80%;
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            line-height: 1.4;
+        }
+
+        .ai-message.user {
+            background-color: var(--primary-color);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+
+        .ai-message.ai {
+            background-color: white;
+            color: var(--dark-color);
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .ai-message-time {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .ai-message.ai .ai-message-time {
+            text-align: left;
+        }
+
+        .ai-chat-input-container {
+            padding: 15px;
+            background-color: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        .ai-chat-input {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .ai-chat-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .ai-chat-send {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .ai-chat-send:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .ai-chat-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .ai-suggestion {
+            background-color: #f1f3f9;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            padding: 5px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .ai-suggestion:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .ai-typing-indicator {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border-bottom-left-radius: 0;
+            max-width: 80px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .ai-typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--gray-color);
+            margin: 0 2px;
+            animation: typing 1.4s infinite;
+        }
+
+        .ai-typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .ai-typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            max-width: 350px;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-icon {
+            margin-right: 15px;
+            font-size: 20px;
+        }
+
+        .notification-content {
+            flex-grow: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .notification-message {
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: var(--gray-color);
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .notification.success .notification-icon {
+            color: var(--success-color);
+        }
+
+        .notification.error .notification-icon {
+            color: var(--danger-color);
+        }
+
+        .notification.warning .notification-icon {
+            color: var(--warning-color);
+        }
+
+        .notification.info .notification-icon {
+            color: var(--primary-color);
+        }
+
+        /* Subject Selection Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--gray-color);
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .subject-list {
+            margin-bottom: 20px;
+        }
+
+        .subject-category {
+            margin-bottom: 25px;
+        }
+
+        .subject-category-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .subject-category-title i {
+            margin-right: 8px;
+        }
+
+        .subject-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            transition: var(--transition);
+        }
+
+        .subject-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .subject-checkbox {
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .subject-name {
+            flex-grow: 1;
+            font-weight: 500;
+        }
+
+        .subject-code {
+            color: var(--gray-color);
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        .custom-subject-input {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .custom-subject-input input {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .custom-subject-list {
+            margin-top: 15px;
+        }
+
+        .custom-subject-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 8px;
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .custom-subject-name {
+            flex-grow: 1;
+            font-weight: 500;
+        }
+
+        .btn-remove {
+            background: none;
+            border: none;
+            color: var(--danger-color);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 5px;
+        }
+
+        .modal-footer {
+            padding: 15px 25px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background-color: var(--gray-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            color: var(--gray-color);
+            margin-bottom: 15px;
+        }
+
+        .empty-state-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .empty-state-description {
+            color: var(--gray-color);
+            margin-bottom: 20px;
+        }
+
+        .tab-container {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tab-nav {
+            display: flex;
+            margin-bottom: -1px;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--gray-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tab-button.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .tab-button:hover {
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Edit Marks Modal Styles */
+        .edit-marks-input {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .edit-marks-input label {
+            min-width: 120px;
+            margin-right: 15px;
+            font-weight: 500;
+        }
+
+        .edit-marks-input input {
+            flex-grow: 1;
+        }
+
+        .btn-edit-marks {
+            background-color: var(--warning-color);
+            color: white;
+            font-size: 12px;
+            padding: 4px 8px;
+            margin-left: 10px;
+        }
+
+        .btn-edit-marks:hover {
+            background-color: #e68900;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .auth-card {
+                padding: 30px 20px;
+            }
+
+            .navbar-container {
+                flex-direction: column;
+            }
+
+            .navbar-brand {
+                margin-bottom: 15px;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .features-container {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                max-width: 95%;
+            }
+
+            .progress-item-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .btn-edit-marks {
+                margin-top: 8px;
+                margin-left: 0;
+            }
+
+            .attendance-week {
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+
+            .attendance-day {
+                min-width: 40px;
+            }
+
+            .assignment-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .assignment-checkbox {
+                margin-bottom: 10px;
+            }
+
+            .assignment-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .assignment-actions {
+                margin-top: 10px;
+                align-self: flex-end;
+            }
+
+            .ai-chat-container {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sign In Page -->
+    <div id="signInPage" class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Campus360</h1>
+                <p>Welcome back! Please sign in to your account</p>
+            </div>
+            <form id="signInForm">
+                <div class="form-group">
+                    <label for="signInEmail">Email</label>
+                    <input type="email" id="signInEmail" class="form-control" placeholder="Enter your email" required>
+                    <div class="error-message" id="signInEmailError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="signInPassword">Password</label>
+                    <div class="input-group">
+                        <input type="password" id="signInPassword" class="form-control" placeholder="Enter your password" required>
+                        <i class="fas fa-eye toggle-password" data-target="signInPassword"></i>
+                    </div>
+                    <div class="error-message" id="signInPasswordError"></div>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe">Remember me</label>
+                </div>
+                <button type="submit" class="btn">Sign In</button>
+                <div class="auth-footer">
+                    <a href="#" id="forgotPasswordLink">Forgot password?</a>
+                </div>
+                <div class="auth-footer">
+                    Don't have an account? <a href="#" id="signUpLink">Sign Up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sign Up Page -->
+    <div id="signUpPage" class="auth-container" style="display: none;">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Create Account</h1>
+                <p>Join Campus360 to enhance your student experience</p>
+            </div>
+            <form id="signUpForm" novalidate>
+                <div class="form-group">
+                    <label for="signUpName">Full Name</label>
+                    <input type="text" id="signUpName" class="form-control" placeholder="Enter your full name" required>
+                    <div class="error-message" id="signUpNameError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="signUpEmail">Email</label>
+                    <input type="email" id="signUpEmail" class="form-control" placeholder="Enter your email" required>
+                    <div class="error-message" id="signUpEmailError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="signUpPassword">Password</label>
+                    <div class="input-group">
+                        <input type="password" id="signUpPassword" class="form-control" placeholder="Create a password" required>
+                        <i class="fas fa-eye toggle-password" data-target="signUpPassword"></i>
+                    </div>
+                    <div class="password-strength">
+                        <div class="password-strength-meter" id="passwordStrengthMeter"></div>
+                    </div>
+                    <div class="error-message" id="signUpPasswordError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <div class="input-group">
+                        <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password" required>
+                        <i class="fas fa-eye toggle-password" data-target="confirmPassword"></i>
+                    </div>
+                    <div class="error-message" id="confirmPasswordError"></div>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="termsConditions" required>
+                    <label for="termsConditions">I agree to the Terms and Conditions</label>
+                </div>
+                <button type="submit" class="btn">Sign Up</button>
+                <div class="auth-footer">
+                    Already have an account? <a href="#" id="signInLink">Sign In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="container navbar-container">
+                <a href="#" class="navbar-brand">
+                    <i class="fas fa-graduation-cap"></i>
+                    Campus360
+                </a>
+                <div class="navbar-menu">
+                    <div class="navbar-user">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span class="user-name" id="userName">User</span>
+                    </div>
+                    <button class="btn btn-logout" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Dashboard Content -->
+        <div class="container dashboard-content">
+            <div class="dashboard-header">
+                <h1>Student Dashboard</h1>
+                <p>Welcome back! Here's an overview of your academic progress and campus activities.</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-container">
+                <!-- Enhanced Attendance Card -->
+                <div class="attendance-card">
+                    <div class="attendance-header">
+                        <div class="attendance-title">Attendance</div>
+                        <div class="stat-card-icon" style="background-color: #4a6bdf;">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                    </div>
+                    <div class="attendance-percentage" id="attendancePercentage">87%</div>
+                    <div class="attendance-label">Current Week Attendance</div>
+                    
+                    <div class="attendance-week" id="attendanceWeek">
+                        <!-- Week days will be generated by JavaScript -->
+                    </div>
+                    
+                    <div class="attendance-summary">
+                        <div class="attendance-stat">
+                            <span class="attendance-stat-label">Present</span>
+                            <span class="attendance-stat-value present" id="presentCount">0</span>
+                        </div>
+                        <div class="attendance-stat">
+                            <span class="attendance-stat-label">Absent</span>
+                            <span class="attendance-stat-value absent" id="absentCount">0</span>
+                        </div>
+                        <div class="attendance-stat">
+                            <span class="attendance-stat-label">Leave</span>
+                            <span class="attendance-stat-value leave" id="leaveCount">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="attendance-actions">
+                        <button class="btn btn-sm btn-outline attendance-btn" id="viewCalendarBtn">View Calendar</button>
+                        <button class="btn btn-sm attendance-btn" id="markAllPresentBtn">Mark All Present</button>
+                    </div>
+                </div>
+                
+                <!-- Updated Assignments Card -->
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-title">Assignments</div>
+                        <div class="stat-card-icon" style="background-color: #4caf50;">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value" id="assignmentStats">0/0</div>
+                    <div class="stat-card-change positive">
+                        <i class="fas fa-arrow-up"></i> <span id="assignmentPercentage">0%</span> completed
+                    </div>
+                </div>
+                
+                <!-- GPA Card -->
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-title">GPA</div>
+                        <div class="stat-card-icon" style="background-color: #ff9800;">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value">3.7</div>
+                    <div class="stat-card-change positive">
+                        <i class="fas fa-arrow-up"></i> 0.2 from last semester
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Tracking -->
+            <div class="progress-card">
+                <div class="progress-card-header">
+                    <div class="progress-card-title">Academic Progress</div>
+                    <a href="#" class="progress-card-action" id="manageSubjectsBtn">Manage Subjects</a>
+                </div>
+                <div id="progressContent">
+                    <!-- Progress items will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Assignments Section -->
+            <div class="assignment-card">
+                <div class="assignment-card-header">
+                    <div class="assignment-card-title">My Assignments</div>
+                    <button class="btn btn-sm" id="addAssignmentBtn">
+                        <i class="fas fa-plus"></i> Add Assignment
+                    </button>
+                </div>
+                <div id="assignmentList">
+                    <!-- Assignments will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="features-container">
+                <!-- AI Study Buddy Card with Chat -->
+                <div class="ai-study-buddy-card">
+                    <div class="ai-study-buddy-header">
+                        <div class="ai-study-buddy-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="ai-study-buddy-title">AI Study Buddy</div>
+                    </div>
+                    <div class="ai-study-buddy-description">
+                        Get personalized study recommendations based on your performance. Our AI analyzes your progress and suggests topics to revise before exams.
+                    </div>
+                    
+                    <div class="ai-chat-container">
+                        <div class="ai-chat-messages" id="aiChatMessages">
+                            <div class="ai-message ai">
+                                Hello! I'm your AI Study Buddy. I can help you with study recommendations, answer questions about your subjects, and provide learning resources. How can I assist you today?
+                                <div class="ai-message-time">Just now</div>
+                            </div>
+                        </div>
+                        <div class="ai-chat-input-container">
+                            <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="Type your message here...">
+                            <button class="ai-chat-send" id="aiChatSendBtn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-chat-suggestions">
+                        <div class="ai-suggestion">Study tips</div>
+                        <div class="ai-suggestion">Subject recommendations</div>
+                        <div class="ai-suggestion">Exam preparation</div>
+                        <div class="ai-suggestion">Time management</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon" style="background-color: #4caf50;">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="feature-title">ClubSync</div>
+                    <div class="feature-description">
+                        Discover and join campus clubs, register for events, and earn reward points for active participation. Use AR to navigate event locations.
+                    </div>
+                    <a href="#" class="feature-action">Explore Clubs <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background-color: #f44336;">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-title">SafeTrack</div>
+                    <div class="feature-description">
+                        Ensure your safety on campus with location tracking and alerts. Activate Guardian Mode to let parents know you've arrived safely.
+                    </div>
+                    <a href="#" class="feature-action">Activate Safety <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background-color: #ff9800;">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="feature-title">SmartPlanner</div>
+                    <div class="feature-description">
+                        AI-powered scheduling that automatically adjusts your study routine when classes are canceled or new events are added.
+                    </div>
+                    <a href="#" class="feature-action">View Schedule <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background-color: #00bcd4;">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="feature-title">EcoCampus</div>
+                    <div class="feature-description">
+                        Track campus power and water usage, and contribute to sustainability efforts. See how your department ranks in eco-scores.
+                    </div>
+                    <a href="#" class="feature-action">View Eco Data <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background-color: #9c27b0;">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="feature-title">Panic Button</div>
+                    <div class="feature-description">
+                        Instantly alert campus security in case of emergency. Your location will be shared for quick response and assistance.
+                    </div>
+                    <a href="#" class="feature-action">Set Up Alerts <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subject Selection Modal -->
+    <div id="subjectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Manage Your Subjects</h2>
+                <button class="modal-close" id="closeModalBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="tab-container">
+                    <div class="tab-nav">
+                        <button class="tab-button active" data-tab="predefined">Predefined Subjects</button>
+                        <button class="tab-button" data-tab="custom">Custom Subjects</button>
+                    </div>
+                   
+                    <div class="tab-content active" id="predefined-tab">
+                        <div class="subject-list">
+                            <div class="subject-category">
+                                <h3 class="subject-category-title">
+                                    <i class="fas fa-laptop-code"></i> Computer Science & IT
+                                </h3>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject1" value="Computer Science">
+                                    <label for="subject1" class="subject-name">Computer Science</label>
+                                    <span class="subject-code">CS101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject2" value="Data Structures">
+                                    <label for="subject2" class="subject-name">Data Structures</label>
+                                    <span class="subject-code">CS201</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject3" value="Algorithms">
+                                    <label for="subject3" class="subject-name">Algorithms</label>
+                                    <span class="subject-code">CS301</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject4" value="Database Systems">
+                                    <label for="subject4" class="subject-name">Database Systems</label>
+                                    <span class="subject-code">CS302</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject5" value="Web Development">
+                                    <label for="subject5" class="subject-name">Web Development</label>
+                                    <span class="subject-code">CS303</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject6" value="Machine Learning">
+                                    <label for="subject6" class="subject-name">Machine Learning</label>
+                                    <span class="subject-code">CS401</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject7" value="Cybersecurity">
+                                    <label for="subject7" class="subject-name">Cybersecurity</label>
+                                    <span class="subject-code">CS402</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject8" value="Software Engineering">
+                                    <label for="subject8" class="subject-name">Software Engineering</label>
+                                    <span class="subject-code">CS403</span>
+                                </div>
+                            </div>
+                           
+                            <div class="subject-category">
+                                <h3 class="subject-category-title">
+                                    <i class="fas fa-calculator"></i> Mathematics & Statistics
+                                </h3>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject9" value="Mathematics">
+                                    <label for="subject9" class="subject-name">Mathematics</label>
+                                    <span class="subject-code">MATH201</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject10" value="Calculus">
+                                    <label for="subject10" class="subject-name">Calculus</label>
+                                    <span class="subject-code">MATH101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject11" value="Linear Algebra">
+                                    <label for="subject11" class="subject-name">Linear Algebra</label>
+                                    <span class="subject-code">MATH202</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject12" value="Statistics">
+                                    <label for="subject12" class="subject-name">Statistics</label>
+                                    <span class="subject-code">STAT101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject13" value="Probability">
+                                    <label for="subject13" class="subject-name">Probability</label>
+                                    <span class="subject-code">STAT201</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject14" value="Discrete Mathematics">
+                                    <label for="subject14" class="subject-name">Discrete Mathematics</label>
+                                    <span class="subject-code">MATH301</span>
+                                </div>
+                            </div>
+                           
+                            <div class="subject-category">
+                                <h3 class="subject-category-title">
+                                    <i class="fas fa-atom"></i> Natural Sciences
+                                </h3>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject15" value="Physics">
+                                    <label for="subject15" class="subject-name">Physics</label>
+                                    <span class="subject-code">PHY101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject16" value="Chemistry">
+                                    <label for="subject16" class="subject-name">Chemistry</label>
+                                    <span class="subject-code">CHEM101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject17" value="Biology">
+                                    <label for="subject17" class="subject-name">Biology</label>
+                                    <span class="subject-code">BIO101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject18" value="Environmental Science">
+                                    <label for="subject18" class="subject-name">Environmental Science</label>
+                                    <span class="subject-code">ENV101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject19" value="Astronomy">
+                                    <label for="subject19" class="subject-name">Astronomy</label>
+                                    <span class="subject-code">ASTRO101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject20" value="Geology">
+                                    <label for="subject20" class="subject-name">Geology</label>
+                                    <span class="subject-code">GEOL101</span>
+                                </div>
+                            </div>
+                           
+                            <div class="subject-category">
+                                <h3 class="subject-category-title">
+                                    <i class="fas fa-book"></i> Humanities & Social Sciences
+                                </h3>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject21" value="English Literature">
+                                    <label for="subject21" class="subject-name">English Literature</label>
+                                    <span class="subject-code">ENG102</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject22" value="History">
+                                    <label for="subject22" class="subject-name">History</label>
+                                    <span class="subject-code">HIS101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject23" value="Philosophy">
+                                    <label for="subject23" class="subject-name">Philosophy</label>
+                                    <span class="subject-code">PHIL201</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject24" value="Psychology">
+                                    <label for="subject24" class="subject-name">Psychology</label>
+                                    <span class="subject-code">PSY101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject25" value="Sociology">
+                                    <label for="subject25" class="subject-name">Sociology</label>
+                                    <span class="subject-code">SOC101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject26" value="Anthropology">
+                                    <label for="subject26" class="subject-name">Anthropology</label>
+                                    <span class="subject-code">ANTH101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject27" value="Political Science">
+                                    <label for="subject27" class="subject-name">Political Science</label>
+                                    <span class="subject-code">POL101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject28" value="Economics">
+                                    <label for="subject28" class="subject-name">Economics</label>
+                                    <span class="subject-code">ECO201</span>
+                                </div>
+                            </div>
+                           
+                            <div class="subject-category">
+                                <h3 class="subject-category-title">
+                                    <i class="fas fa-palette"></i> Arts & Design
+                                </h3>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject29" value="Fine Arts">
+                                    <label for="subject29" class="subject-name">Fine Arts</label>
+                                    <span class="subject-code">ART101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject30" value="Music Theory">
+                                    <label for="subject30" class="subject-name">Music Theory</label>
+                                    <span class="subject-code">MUS101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject31" value="Graphic Design">
+                                    <label for="subject31" class="subject-name">Graphic Design</label>
+                                    <span class="subject-code">DES101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject32" value="Theater Arts">
+                                    <label for="subject32" class="subject-name">Theater Arts</label>
+                                    <span class="subject-code">THTR101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject33" value="Photography">
+                                    <label for="subject33" class="subject-name">Photography</label>
+                                    <span class="subject-code">PHOTO101</span>
+                                </div>
+                            </div>
+                           
+                            <div class="subject-category">
+                                <h3 class="subject-category-title">
+                                    <i class="fas fa-briefcase"></i> Business & Management
+                                </h3>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject34" value="Business Administration">
+                                    <label for="subject34" class="subject-name">Business Administration</label>
+                                    <span class="subject-code">BUS101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject35" value="Marketing">
+                                    <label for="subject35" class="subject-name">Marketing</label>
+                                    <span class="subject-code">MKT201</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject36" value="Finance">
+                                    <label for="subject36" class="subject-name">Finance</label>
+                                    <span class="subject-code">FIN201</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject37" value="Accounting">
+                                    <label for="subject37" class="subject-name">Accounting</label>
+                                    <span class="subject-code">ACC101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject38" value="Human Resources">
+                                    <label for="subject38" class="subject-name">Human Resources</label>
+                                    <span class="subject-code">HR201</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject39" value="Entrepreneurship">
+                                    <label for="subject39" class="subject-name">Entrepreneurship</label>
+                                    <span class="subject-code">ENT301</span>
+                                </div>
+                            </div>
+                           
+                            <div class="subject-category">
+                                <h3 class="subject-category-title">
+                                    <i class="fas fa-heartbeat"></i> Health & Medicine
+                                </h3>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject40" value="Anatomy">
+                                    <label for="subject40" class="subject-name">Anatomy</label>
+                                    <span class="subject-code">ANA101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject41" value="Physiology">
+                                    <label for="subject41" class="subject-name">Physiology</label>
+                                    <span class="subject-code">PHY201</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject42" value="Nutrition">
+                                    <label for="subject42" class="subject-name">Nutrition</label>
+                                    <span class="subject-code">NUT101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject43" value="Public Health">
+                                    <label for="subject43" class="subject-name">Public Health</label>
+                                    <span class="subject-code">PH201</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject44" value="Pharmacology">
+                                    <label for="subject44" class="subject-name">Pharmacology</label>
+                                    <span class="subject-code">PHAR301</span>
+                                </div>
+                            </div>
+                           
+                            <div class="subject-category">
+                                <h3 class="subject-category-title">
+                                    <i class="fas fa-globe"></i> Languages
+                                </h3>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject45" value="Spanish">
+                                    <label for="subject45" class="subject-name">Spanish</label>
+                                    <span class="subject-code">SPAN101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject46" value="French">
+                                    <label for="subject46" class="subject-name">French</label>
+                                    <span class="subject-code">FREN101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject47" value="German">
+                                    <label for="subject47" class="subject-name">German</label>
+                                    <span class="subject-code">GER101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject48" value="Mandarin">
+                                    <label for="subject48" class="subject-name">Mandarin</label>
+                                    <span class="subject-code">MAND101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject49" value="Japanese">
+                                    <label for="subject49" class="subject-name">Japanese</label>
+                                    <span class="subject-code">JAPN101</span>
+                                </div>
+                                <div class="subject-item">
+                                    <input type="checkbox" class="subject-checkbox" id="subject50" value="Arabic">
+                                    <label for="subject50" class="subject-name">Arabic</label>
+                                    <span class="subject-code">ARAB101</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="tab-content" id="custom-tab">
+                        <div class="custom-subject-input">
+                            <input type="text" id="customSubjectName" class="form-control" placeholder="Enter custom subject name">
+                            <button class="btn btn-sm" id="addCustomSubjectBtn">Add</button>
+                        </div>
+                        <div class="custom-subject-list" id="customSubjectList">
+                            <!-- Custom subjects will be added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                <button class="btn" id="saveSubjectsBtn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Marks Modal -->
+    <div id="editMarksModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Edit Marks</h2>
+                <button class="modal-close" id="closeEditMarksModalBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="edit-marks-input">
+                    <label for="editSubjectName">Subject:</label>
+                    <input type="text" id="editSubjectName" class="form-control" readonly>
+                </div>
+                <div class="edit-marks-input">
+                    <label for="editMarks">Progress (%):</label>
+                    <input type="number" id="editMarks" class="form-control" min="0" max="100" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelEditMarksBtn">Cancel</button>
+                <button class="btn" id="saveMarksBtn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assignment Modal -->
+    <div id="assignmentModal" class="assignment-modal">
+        <div class="assignment-modal-content">
+            <div class="assignment-modal-header">
+                <h2 class="assignment-modal-title" id="assignmentModalTitle">Add Assignment</h2>
+                <button class="assignment-modal-close" id="closeAssignmentModalBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="assignment-modal-body">
+                <form id="assignmentForm">
+                    <div class="assignment-form-group">
+                        <label for="assignmentTitle">Assignment Title</label>
+                        <input type="text" id="assignmentTitle" class="assignment-form-control" placeholder="Enter assignment title" required>
+                    </div>
+                    <div class="assignment-form-group">
+                        <label for="assignmentSubject">Subject</label>
+                        <select id="assignmentSubject" class="assignment-form-select" required>
+                            <option value="">Select a subject</option>
+                            <!-- Subject options will be dynamically added here -->
+                        </select>
+                    </div>
+                    <div class="assignment-form-group">
+                        <label for="assignmentDueDate">Due Date</label>
+                        <input type="date" id="assignmentDueDate" class="assignment-form-control" required>
+                    </div>
+                    <div class="assignment-form-group">
+                        <label for="assignmentStatus">Status</label>
+                        <select id="assignmentStatus" class="assignment-form-select" required>
+                            <option value="pending">Not Started</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="assignment-form-group">
+                        <label for="assignmentDescription">Description (Optional)</label>
+                        <textarea id="assignmentDescription" class="assignment-form-control" rows="3" placeholder="Enter assignment description"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="assignment-modal-footer">
+                <button class="btn btn-secondary" id="cancelAssignmentBtn">Cancel</button>
+                <button class="btn" id="saveAssignmentBtn">Save Assignment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attendance Status Modal -->
+    <div id="attendanceStatusModal" class="attendance-status-modal">
+        <div class="attendance-status-content">
+            <div class="attendance-status-header">
+                <div class="attendance-status-title">Mark Attendance</div>
+                <button class="attendance-status-close" id="closeAttendanceStatusModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="attendance-status-date" id="attendanceStatusDate">Monday, Jan 1, 2023</div>
+            <div class="attendance-status-options">
+                <div class="attendance-status-option" data-status="present">
+                    <div class="attendance-status-option-icon present">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="attendance-status-option-text">Present</div>
+                </div>
+                <div class="attendance-status-option" data-status="absent">
+                    <div class="attendance-status-option-icon absent">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="attendance-status-option-text">Absent</div>
+                </div>
+                <div class="attendance-status-option" data-status="leave">
+                    <div class="attendance-status-option-icon leave">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="attendance-status-option-text">On Leave</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Calendar Modal -->
+    <div id="calendarModal" class="calendar-modal">
+        <div class="calendar-content">
+            <div class="calendar-header">
+                <h2 class="calendar-title">Attendance Calendar</h2>
+                <button class="calendar-close" id="closeCalendarModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="calendar-nav">
+                <button class="calendar-nav-btn" id="prevMonthBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="calendar-month" id="calendarMonth">January 2023</div>
+                <button class="calendar-nav-btn" id="nextMonthBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Calendar will be generated by JavaScript -->
+            </div>
+            <div class="calendar-legend">
+                <div class="calendar-legend-item">
+                    <div class="calendar-legend-color present"></div>
+                    <span>Present</span>
+                </div>
+                <div class="calendar-legend-item">
+                    <div class="calendar-legend-color absent"></div>
+                    <span>Absent</span>
+                </div>
+                <div class="calendar-legend-item">
+                    <div class="calendar-legend-color leave"></div>
+                    <span>Leave</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <div class="notification-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="notification-content">
+            <div class="notification-title">Success</div>
+            <div class="notification-message">Operation completed successfully</div>
+        </div>
+        <button class="notification-close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <script>
+        // AI Chat functionality
+        function initAiChat() {
+            const aiChatSendBtn = document.getElementById('aiChatSendBtn');
+            const aiChatInput = document.getElementById('aiChatInput');
+            const aiSuggestions = document.querySelectorAll('.ai-suggestion');
+            
+            // Send message on button click
+            aiChatSendBtn.addEventListener('click', sendAiMessage);
+
+            // Send message on Enter key
+            aiChatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendAiMessage();
+                }
+            });
+
+            // Handle suggestion clicks
+            aiSuggestions.forEach(suggestion => {
+                suggestion.addEventListener('click', () => {
+                    aiChatInput.value = suggestion.textContent;
+                    sendAiMessage();
+                });
+            });
+        }
+
+        function sendAiMessage() {
+            const aiChatInput = document.getElementById('aiChatInput');
+            const aiChatMessages = document.getElementById('aiChatMessages');
+            const message = aiChatInput.value.trim();
+            
+            if (!message) return;
+
+            // Add user message to chat
+            addChatMessage(message, 'user');
+            
+            // Clear input
+            aiChatInput.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Simulate AI response after a delay
+            setTimeout(() => {
+                removeTypingIndicator();
+                const aiResponse = generateAiResponse(message);
+                addChatMessage(aiResponse, 'ai');
+            }, 1000);
+        }
+
+        function addChatMessage(message, sender) {
+            const aiChatMessages = document.getElementById('aiChatMessages');
+            const messageElement = document.createElement('div');
+            messageElement.className = `ai-message ${sender}`;
+            
+            const messageText = document.createElement('div');
+            messageText.textContent = message;
+            
+            const messageTime = document.createElement('div');
+            messageTime.className = 'ai-message-time';
+            messageTime.textContent = 'Just now';
+            
+            messageElement.appendChild(messageText);
+            messageElement.appendChild(messageTime);
+            
+            aiChatMessages.appendChild(messageElement);
+            
+            // Scroll to bottom
+            aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const aiChatMessages = document.getElementById('aiChatMessages');
+            const typingElement = document.createElement('div');
+            typingElement.className = 'ai-typing-indicator';
+            typingElement.id = 'typingIndicator';
+            
+            for (let i = 0; i < 3; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'ai-typing-dot';
+                typingElement.appendChild(dot);
+            }
+            
+            aiChatMessages.appendChild(typingElement);
+            aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        function generateAiResponse(userMessage) {
+            const lowerCaseMessage = userMessage.toLowerCase();
+            
+            // Simple response logic based on keywords
+            if (lowerCaseMessage.includes('study') || lowerCaseMessage.includes('learn')) {
+                return "Based on your current progress, I recommend focusing on subjects where you're below 75% completion. Try breaking down large topics into smaller, manageable chunks and use the Pomodoro technique (25 minutes of focused study followed by a 5-minute break).";
+            } else if (lowerCaseMessage.includes('subject') || lowerCaseMessage.includes('recommend')) {
+                return "Looking at your academic progress, I suggest prioritizing subjects with lower completion rates. Create a study schedule that allocates more time to challenging subjects while maintaining regular review of all subjects.";
+            } else if (lowerCaseMessage.includes('exam') || lowerCaseMessage.includes('test')) {
+                return "For effective exam preparation, start reviewing at least a week in advance. Create a study guide, practice with past papers, and form study groups with classmates. Make sure to get adequate sleep before the exam day.";
+            } else if (lowerCaseMessage.includes('time') || lowerCaseMessage.includes('manage')) {
+                return "Time management is crucial for academic success. Try using a digital calendar to schedule study sessions, assignments, and breaks. Prioritize tasks based on deadlines and difficulty, and avoid multitasking to maintain focus.";
+            } else if (lowerCaseMessage.includes('help') || lowerCaseMessage.includes('assist')) {
+                return "I'm here to help! You can ask me about study strategies, subject recommendations, exam preparation, time management, or any other academic concerns. What specific area would you like assistance with?";
+            } else {
+                return "I understand you're looking for academic guidance. Could you please specify what aspect of your studies you need help with? For example, study techniques, subject recommendations, or time management strategies?";
+            }
+        }
+
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const signInPage = document.getElementById('signInPage');
+            const signUpPage = document.getElementById('signUpPage');
+            const dashboard = document.getElementById('dashboard');
+            const signInForm = document.getElementById('signInForm');
+            const signUpForm = document.getElementById('signUpForm');
+            const signInLink = document.getElementById('signInLink');
+            const signUpLink = document.getElementById('signUpLink');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+            const notification = document.getElementById('notification');
+            const userAvatar = document.getElementById('userAvatar');
+            const userName = document.getElementById('userName');
+            const passwordToggles = document.querySelectorAll('.toggle-password');
+            const signUpPassword = document.getElementById('signUpPassword');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const passwordStrengthMeter = document.getElementById('passwordStrengthMeter');
+           
+            // Subject Selection Modal Elements
+            const subjectModal = document.getElementById('subjectModal');
+            const manageSubjectsBtn = document.getElementById('manageSubjectsBtn');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const saveSubjectsBtn = document.getElementById('saveSubjectsBtn');
+            const progressContent = document.getElementById('progressContent');
+            const subjectCheckboxes = document.querySelectorAll('.subject-checkbox');
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const customSubjectName = document.getElementById('customSubjectName');
+            const addCustomSubjectBtn = document.getElementById('addCustomSubjectBtn');
+            const customSubjectList = document.getElementById('customSubjectList');
+
+            // Edit Marks Modal Elements
+            const editMarksModal = document.getElementById('editMarksModal');
+            const closeEditMarksModalBtn = document.getElementById('closeEditMarksModalBtn');
+            const cancelEditMarksBtn = document.getElementById('cancelEditMarksBtn');
+            const saveMarksBtn = document.getElementById('saveMarksBtn');
+            const editSubjectName = document.getElementById('editSubjectName');
+            const editMarks = document.getElementById('editMarks');
+
+            // Assignment Elements
+            const assignmentCard = document.querySelector('.assignment-card');
+            const assignmentList = document.getElementById('assignmentList');
+            const addAssignmentBtn = document.getElementById('addAssignmentBtn');
+            const assignmentModal = document.getElementById('assignmentModal');
+            const closeAssignmentModalBtn = document.getElementById('closeAssignmentModalBtn');
+            const cancelAssignmentBtn = document.getElementById('cancelAssignmentBtn');
+            const saveAssignmentBtn = document.getElementById('saveAssignmentBtn');
+            const assignmentForm = document.getElementById('assignmentForm');
+            const assignmentModalTitle = document.getElementById('assignmentModalTitle');
+            const assignmentTitle = document.getElementById('assignmentTitle');
+            const assignmentSubject = document.getElementById('assignmentSubject');
+            const assignmentDueDate = document.getElementById('assignmentDueDate');
+            const assignmentStatus = document.getElementById('assignmentStatus');
+            const assignmentDescription = document.getElementById('assignmentDescription');
+            const assignmentStats = document.getElementById('assignmentStats');
+            const assignmentPercentage = document.getElementById('assignmentPercentage');
+
+            // Attendance Elements
+            const attendanceWeek = document.getElementById('attendanceWeek');
+            const attendancePercentage = document.getElementById('attendancePercentage');
+            const presentCountElement = document.getElementById('presentCount');
+            const absentCountElement = document.getElementById('absentCount');
+            const leaveCountElement = document.getElementById('leaveCount');
+            const viewCalendarBtn = document.getElementById('viewCalendarBtn');
+            const markAllPresentBtn = document.getElementById('markAllPresentBtn');
+            const attendanceStatusModal = document.getElementById('attendanceStatusModal');
+            const closeAttendanceStatusModalBtn = document.getElementById('closeAttendanceStatusModal');
+            const attendanceStatusDate = document.getElementById('attendanceStatusDate');
+            const attendanceStatusOptions = document.querySelectorAll('.attendance-status-option');
+            
+            // Calendar Modal Elements
+            const calendarModal = document.getElementById('calendarModal');
+            const closeCalendarModalBtn = document.getElementById('closeCalendarModal');
+            const calendarMonth = document.getElementById('calendarMonth');
+            const calendarGrid = document.getElementById('calendarGrid');
+            const prevMonthBtn = document.getElementById('prevMonthBtn');
+            const nextMonthBtn = document.getElementById('nextMonthBtn');
+
+            // Initialize AI Chat
+            initAiChat();
+
+            // Available subjects with their progress data
+            const availableSubjects = {
+                "Computer Science": { progress: 85, color: "#4a6bdf" },
+                "Data Structures": { progress: 70, color: "#3f51b5" },
+                "Algorithms": { progress: 75, color: "#673ab7" },
+                "Database Systems": { progress: 68, color: "#9c27b0" },
+                "Web Development": { progress: 92, color: "#e91e63" },
+                "Machine Learning": { progress: 60, color: "#f44336" },
+                "Cybersecurity": { progress: 78, color: "#ff9800" },
+                "Software Engineering": { progress: 82, color: "#ff5722" },
+                "Mathematics": { progress: 72, color: "#4caf50" },
+                "Calculus": { progress: 65, color: "#8bc34a" },
+                "Linear Algebra": { progress: 80, color: "#cddc39" },
+                "Statistics": { progress: 75, color: "#ffeb3b" },
+                "Probability": { progress: 70, color: "#ffc107" },
+                "Discrete Mathematics": { progress: 68, color: "#ff9800" },
+                "Physics": { progress: 90, color: "#ff5722" },
+                "Chemistry": { progress: 85, color: "#795548" },
+                "Biology": { progress: 78, color: "#9e9e9e" },
+                "Environmental Science": { progress: 82, color: "#607d8b" },
+                "Astronomy": { progress: 88, color: "#3f51b5" },
+                "Geology": { progress: 75, color: "#2196f3" },
+                "English Literature": { progress: 78, color: "#9c27b0" },
+                "History": { progress: 88, color: "#673ab7" },
+                "Philosophy": { progress: 75, color: "#3f51b5" },
+                "Psychology": { progress: 65, color: "#2196f3" },
+                "Sociology": { progress: 72, color: "#03a9f4" },
+                "Anthropology": { progress: 80, color: "#00bcd4" },
+                "Political Science": { progress: 75, color: "#009688" },
+                "Economics": { progress: 82, color: "#4caf50" },
+                "Fine Arts": { progress: 90, color: "#8bc34a" },
+                "Music Theory": { progress: 85, color: "#cddc39" },
+                "Graphic Design": { progress: 92, color: "#ffeb3b" },
+                "Theater Arts": { progress: 78, color: "#ffc107" },
+                "Photography": { progress: 85, color: "#ff9800" },
+                "Business Administration": { progress: 80, color: "#ff5722" },
+                "Marketing": { progress: 75, color: "#795548" },
+                "Finance": { progress: 82, color: "#9e9e9e" },
+                "Accounting": { progress: 78, color: "#607d8b" },
+                "Human Resources": { progress: 85, color: "#3f51b5" },
+                "Entrepreneurship": { progress: 88, color: "#2196f3" },
+                "Anatomy": { progress: 90, color: "#03a9f4" },
+                "Physiology": { progress: 85, color: "#00bcd4" },
+                "Nutrition": { progress: 80, color: "#009688" },
+                "Public Health": { progress: 75, color: "#4caf50" },
+                "Pharmacology": { progress: 82, color: "#8bc34a" },
+                "Spanish": { progress: 88, color: "#cddc39" },
+                "French": { progress: 85, color: "#ffeb3b" },
+                "German": { progress: 80, color: "#ffc107" },
+                "Mandarin": { progress: 75, color: "#ff9800" },
+                "Japanese": { progress: 70, color: "#ff5722" },
+                "Arabic": { progress: 65, color: "#795548" }
+            };
+
+            // Custom subjects array
+            let customSubjects = [];
+
+            // Assignment variables
+            let assignments = [];
+            let editingAssignmentId = null;
+
+            // Attendance data
+            let attendanceData = {};
+            let selectedDate = null;
+            let currentCalendarDate = new Date();
+
+            // Check if user is already logged in
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                showDashboard(user);
+            }
+
+            // Toggle between sign in and sign up pages
+            signUpLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                signInPage.style.display = 'none';
+                signUpPage.style.display = 'flex';
+                clearErrors();
+            });
+
+            signInLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                signUpPage.style.display = 'none';
+                signInPage.style.display = 'flex';
+                clearErrors();
+            });
+
+            // Password visibility toggle
+            passwordToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const targetId = toggle.getAttribute('data-target');
+                    const targetInput = document.getElementById(targetId);
+                   
+                    if (targetInput.type === 'password') {
+                        targetInput.type = 'text';
+                        toggle.classList.remove('fa-eye');
+                        toggle.classList.add('fa-eye-slash');
+                    } else {
+                        targetInput.type = 'password';
+                        toggle.classList.remove('fa-eye-slash');
+                        toggle.classList.add('fa-eye');
+                    }
+                });
+            });
+
+            // Password strength meter
+            signUpPassword.addEventListener('input', () => {
+                const password = signUpPassword.value;
+                let strength = 0;
+               
+                if (password.length >= 8) strength += 1;
+                if (password.match(/[a-z]+/)) strength += 1;
+                if (password.match(/[A-Z]+/)) strength += 1;
+                if (password.match(/[0-9]+/)) strength += 1;
+                if (password.match(/[$@#&!]+/)) strength += 1;
+               
+                passwordStrengthMeter.className = 'password-strength-meter';
+               
+                if (password.length === 0) {
+                    passwordStrengthMeter.style.width = '0';
+                } else if (strength <= 2) {
+                    passwordStrengthMeter.classList.add('weak');
+                } else if (strength <= 3) {
+                    passwordStrengthMeter.classList.add('medium');
+                } else {
+                    passwordStrengthMeter.classList.add('strong');
+                }
+            });
+
+            // Sign in form submission
+            signInForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                clearErrors();
+               
+                const email = document.getElementById('signInEmail').value;
+                const password = document.getElementById('signInPassword').value;
+                const rememberMe = document.getElementById('rememberMe').checked;
+               
+                let isValid = true;
+               
+                // Email validation
+                if (!email) {
+                    showError('signInEmailError', 'Email is required');
+                    isValid = false;
+                } else if (!isValidEmail(email)) {
+                    showError('signInEmailError', 'Please enter a valid email');
+                    isValid = false;
+                }
+               
+                // Password validation
+                if (!password) {
+                    showError('signInPasswordError', 'Password is required');
+                    isValid = false;
+                }
+               
+                if (isValid) {
+                    // Get users from localStorage
+                    const users = JSON.parse(localStorage.getItem('users')) || [];
+                   
+                    // Find user with matching email and password
+                    const user = users.find(u => u.email === email && u.password === password);
+                   
+                    if (user) {
+                        // Save user session
+                        if (rememberMe) {
+                            localStorage.setItem('user', JSON.stringify(user));
+                        } else {
+                            sessionStorage.setItem('user', JSON.stringify(user));
+                        }
+                       
+                        showNotification('success', 'Login Successful', 'Welcome back to Campus360!');
+                        showDashboard(user);
+                    } else {
+                        showError('signInPasswordError', 'Invalid email or password');
+                    }
+                }
+            });
+
+            // Sign up form submission
+            signUpForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                clearErrors();
+               
+                const name = document.getElementById('signUpName').value;
+                const email = document.getElementById('signUpEmail').value;
+                const password = signUpPassword.value;
+                const confirmPass = confirmPassword.value;
+                const termsConditions = document.getElementById('termsConditions').checked;
+               
+                let isValid = true;
+               
+                // Name validation
+                if (!name) {
+                    showError('signUpNameError', 'Name is required');
+                    isValid = false;
+                }
+               
+                // Email validation
+                if (!email) {
+                    showError('signUpEmailError', 'Email is required');
+                    isValid = false;
+                } else if (!isValidEmail(email)) {
+                    showError('signUpEmailError', 'Please enter a valid email');
+                    isValid = false;
+                }
+               
+                // Password validation
+                if (!password) {
+                    showError('signUpPasswordError', 'Password is required');
+                    isValid = false;
+                } else if (password.length < 8) {
+                    showError('signUpPasswordError', 'Password must be at least 8 characters');
+                    isValid = false;
+                }
+               
+                // Confirm password validation
+                if (!confirmPass) {
+                    showError('confirmPasswordError', 'Please confirm your password');
+                    isValid = false;
+                } else if (password !== confirmPass) {
+                    showError('confirmPasswordError', 'Passwords do not match');
+                    isValid = false;
+                }
+               
+                // Terms and conditions validation
+                if (!termsConditions) {
+                    showNotification('warning', 'Terms Required', 'You must agree to the terms and conditions');
+                    isValid = false;
+                }
+               
+                if (isValid) {
+                    // Get users from localStorage
+                    const users = JSON.parse(localStorage.getItem('users')) || [];
+                   
+                    // Check if email already exists
+                    if (users.some(u => u.email === email)) {
+                        showError('signUpEmailError', 'Email already exists');
+                        return;
+                    }
+                   
+                    // Create new user
+                    const newUser = {
+                        id: Date.now(),
+                        name,
+                        email,
+                        password,
+                        createdAt: new Date().toISOString()
+                    };
+                   
+                    // Add user to localStorage
+                    users.push(newUser);
+                    localStorage.setItem('users', JSON.stringify(users));
+                   
+                    // Save user session
+                    localStorage.setItem('user', JSON.stringify(newUser));
+                   
+                    showNotification('success', 'Account Created', 'Your account has been created successfully!');
+                    showDashboard(newUser);
+                }
+            });
+
+            // Logout
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('user');
+                sessionStorage.removeItem('user');
+                showSignInPage();
+                showNotification('info', 'Logged Out', 'You have been successfully logged out');
+            });
+
+            // Forgot password
+            forgotPasswordLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showNotification('info', 'Password Reset', 'Password reset link has been sent to your email');
+            });
+
+            // Subject Selection Modal
+            manageSubjectsBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openSubjectModal();
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                closeSubjectModal();
+            });
+
+            cancelBtn.addEventListener('click', () => {
+                closeSubjectModal();
+            });
+
+            saveSubjectsBtn.addEventListener('click', () => {
+                saveSelectedSubjects();
+            });
+
+            // Tab navigation
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab');
+                   
+                    // Remove active class from all tabs and buttons
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                   
+                    // Add active class to clicked button and corresponding tab
+                    button.classList.add('active');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+
+            // Add custom subject
+            addCustomSubjectBtn.addEventListener('click', () => {
+                const subjectName = customSubjectName.value.trim();
+               
+                if (subjectName) {
+                    // Check if subject already exists
+                    if (customSubjects.includes(subjectName)) {
+                        showNotification('warning', 'Duplicate Subject', 'This subject has already been added');
+                        return;
+                    }
+                   
+                    // Add to custom subjects array
+                    customSubjects.push(subjectName);
+                   
+                    // Add to the list
+                    addCustomSubjectToList(subjectName);
+                   
+                    // Clear input
+                    customSubjectName.value = '';
+                   
+                    showNotification('success', 'Subject Added', `${subjectName} has been added to your custom subjects`);
+                } else {
+                    showNotification('warning', 'Empty Field', 'Please enter a subject name');
+                }
+            });
+
+            // Add custom subject on Enter key
+            customSubjectName.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    addCustomSubjectBtn.click();
+                }
+            });
+
+            // Close modal when clicking outside
+            subjectModal.addEventListener('click', (e) => {
+                if (e.target === subjectModal) {
+                    closeSubjectModal();
+                }
+            });
+
+            // Edit Marks Modal
+            closeEditMarksModalBtn.addEventListener('click', () => {
+                closeEditMarksModal();
+            });
+
+            cancelEditMarksBtn.addEventListener('click', () => {
+                closeEditMarksModal();
+            });
+
+            saveMarksBtn.addEventListener('click', () => {
+                const subjectName = editSubjectName.value;
+                const newProgress = parseInt(editMarks.value);
+                
+                if (isNaN(newProgress) || newProgress < 0 || newProgress > 100) {
+                    showNotification('error', 'Invalid Input', 'Please enter a valid percentage between 0 and 100');
+                    return;
+                }
+                
+                // Update the progress in the availableSubjects object
+                if (availableSubjects[subjectName]) {
+                    availableSubjects[subjectName].progress = newProgress;
+                }
+                
+                // Update the progress display
+                loadUserSubjects();
+                
+                // Close the modal
+                closeEditMarksModal();
+                
+                showNotification('success', 'Marks Updated', `Progress for ${subjectName} has been updated to ${newProgress}%`);
+            });
+
+            // Close edit marks modal when clicking outside
+            editMarksModal.addEventListener('click', (e) => {
+                if (e.target === editMarksModal) {
+                    closeEditMarksModal();
+                }
+            });
+
+            // Assignment functionality
+            function initAssignments() {
+                loadAssignments();
+                renderAssignments();
+                updateAssignmentStats();
+                populateSubjectOptions();
+            }
+
+            // Load assignments from localStorage
+            function loadAssignments() {
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (!user) return;
+                
+                assignments = JSON.parse(localStorage.getItem(`assignments_${user.id}`)) || [];
+            }
+
+            // Save assignments to localStorage
+            function saveAssignments() {
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (!user) return;
+                
+                localStorage.setItem(`assignments_${user.id}`, JSON.stringify(assignments));
+            }
+
+            // Render assignments
+            function renderAssignments() {
+                assignmentList.innerHTML = '';
+                
+                if (assignments.length === 0) {
+                    assignmentList.innerHTML = `
+                        <div class="empty-assignments">
+                            <i class="fas fa-clipboard-list"></i>
+                            <p>No assignments yet. Click "Add Assignment" to get started.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Sort assignments by due date
+                const sortedAssignments = [...assignments].sort((a, b) => {
+                    return new Date(a.dueDate) - new Date(b.dueDate);
+                });
+                
+                sortedAssignments.forEach(assignment => {
+                    const assignmentItem = document.createElement('div');
+                    assignmentItem.className = 'assignment-item';
+                    
+                    const dueDate = new Date(assignment.dueDate);
+                    const formattedDate = dueDate.toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                    
+                    const statusClass = assignment.status === 'completed' ? 'status-completed' : 'status-pending';
+                    const statusText = assignment.status === 'completed' ? 'Completed' : 
+                                     assignment.status === 'in-progress' ? 'In Progress' : 'Not Started';
+                    
+                    assignmentItem.innerHTML = `
+                        <input type="checkbox" class="assignment-checkbox" ${assignment.status === 'completed' ? 'checked' : ''} 
+                               data-id="${assignment.id}" onchange="toggleAssignmentStatus(${assignment.id})">
+                        <div class="assignment-details">
+                            <div class="assignment-title">${assignment.title}</div>
+                            <div class="assignment-meta">
+                                <div class="assignment-subject">
+                                    <i class="fas fa-book"></i>
+                                    <span>${assignment.subject}</span>
+                                </div>
+                                <div class="assignment-due">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>Due: ${formattedDate}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="assignment-status ${statusClass}">${statusText}</div>
+                        <div class="assignment-actions">
+                            <button class="btn-assignment" onclick="editAssignment(${assignment.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-assignment delete" onclick="deleteAssignment(${assignment.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    assignmentList.appendChild(assignmentItem);
+                });
+            }
+
+            // Update assignment statistics
+            function updateAssignmentStats() {
+                const totalAssignments = assignments.length;
+                const completedAssignments = assignments.filter(a => a.status === 'completed').length;
+                const percentage = totalAssignments > 0 ? Math.round((completedAssignments / totalAssignments) * 100) : 0;
+                
+                assignmentStats.textContent = `${completedAssignments}/${totalAssignments}`;
+                assignmentPercentage.textContent = `${percentage}%`;
+            }
+
+            // Populate subject options in the assignment form
+            function populateSubjectOptions() {
+                assignmentSubject.innerHTML = '<option value="">Select a subject</option>';
+                
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (!user) return;
+                
+                const userSubjects = JSON.parse(localStorage.getItem(`userSubjects_${user.id}`)) || [];
+                const userCustomSubjects = JSON.parse(localStorage.getItem(`userCustomSubjects_${user.id}`)) || [];
+                
+                // Add predefined subjects
+                userSubjects.forEach(subject => {
+                    const option = document.createElement('option');
+                    option.value = subject;
+                    option.textContent = subject;
+                    assignmentSubject.appendChild(option);
+                });
+                
+                // Add custom subjects
+                userCustomSubjects.forEach(subject => {
+                    const option = document.createElement('option');
+                    option.value = subject;
+                    option.textContent = subject;
+                    assignmentSubject.appendChild(option);
+                });
+            }
+
+            // Toggle assignment status
+            window.toggleAssignmentStatus = function(id) {
+                const assignment = assignments.find(a => a.id === id);
+                if (assignment) {
+                    assignment.status = assignment.status === 'completed' ? 'pending' : 'completed';
+                    saveAssignments();
+                    renderAssignments();
+                    updateAssignmentStats();
+                    
+                    const statusText = assignment.status === 'completed' ? 'completed' : 'marked as pending';
+                    showNotification('success', 'Assignment Updated', `Assignment has been ${statusText}`);
+                }
+            }
+
+            // Add new assignment
+            function addAssignment() {
+                editingAssignmentId = null;
+                assignmentModalTitle.textContent = 'Add Assignment';
+                assignmentForm.reset();
+                assignmentModal.classList.add('show');
+            }
+
+            // Edit assignment
+            window.editAssignment = function(id) {
+                const assignment = assignments.find(a => a.id === id);
+                if (!assignment) return;
+                
+                editingAssignmentId = id;
+                assignmentModalTitle.textContent = 'Edit Assignment';
+                
+                assignmentTitle.value = assignment.title;
+                assignmentSubject.value = assignment.subject;
+                assignmentDueDate.value = assignment.dueDate;
+                assignmentStatus.value = assignment.status;
+                assignmentDescription.value = assignment.description || '';
+                
+                assignmentModal.classList.add('show');
+            }
+
+            // Delete assignment
+            window.deleteAssignment = function(id) {
+                if (confirm('Are you sure you want to delete this assignment?')) {
+                    assignments = assignments.filter(a => a.id !== id);
+                    saveAssignments();
+                    renderAssignments();
+                    updateAssignmentStats();
+                    
+                    showNotification('success', 'Assignment Deleted', 'Assignment has been deleted successfully');
+                }
+            }
+
+            // Save assignment
+            function saveAssignment() {
+                if (!assignmentForm.checkValidity()) {
+                    assignmentForm.reportValidity();
+                    return;
+                }
+                
+                const title = assignmentTitle.value.trim();
+                const subject = assignmentSubject.value;
+                const dueDate = assignmentDueDate.value;
+                const status = assignmentStatus.value;
+                const description = assignmentDescription.value.trim();
+                
+                if (editingAssignmentId) {
+                    // Update existing assignment
+                    const assignment = assignments.find(a => a.id === editingAssignmentId);
+                    if (assignment) {
+                        assignment.title = title;
+                        assignment.subject = subject;
+                        assignment.dueDate = dueDate;
+                        assignment.status = status;
+                        assignment.description = description;
+                        
+                        showNotification('success', 'Assignment Updated', 'Assignment has been updated successfully');
+                    }
+                } else {
+                    // Add new assignment
+                    const newAssignment = {
+                        id: Date.now(),
+                        title,
+                        subject,
+                        dueDate,
+                        status,
+                        description,
+                        createdAt: new Date().toISOString()
+                    };
+                    
+                    assignments.push(newAssignment);
+                    showNotification('success', 'Assignment Added', 'New assignment has been added successfully');
+                }
+                
+                saveAssignments();
+                renderAssignments();
+                updateAssignmentStats();
+                closeAssignmentModal();
+            }
+
+            // Close assignment modal
+            function closeAssignmentModal() {
+                assignmentModal.classList.remove('show');
+                assignmentForm.reset();
+                editingAssignmentId = null;
+            }
+
+            // Event listeners for assignment modal
+            addAssignmentBtn.addEventListener('click', addAssignment);
+            closeAssignmentModalBtn.addEventListener('click', closeAssignmentModal);
+            cancelAssignmentBtn.addEventListener('click', closeAssignmentModal);
+            saveAssignmentBtn.addEventListener('click', saveAssignment);
+
+            // Close modal when clicking outside
+            assignmentModal.addEventListener('click', (e) => {
+                if (e.target === assignmentModal) {
+                    closeAssignmentModal();
+                }
+            });
+
+            // Attendance functionality
+            function initAttendance() {
+                loadAttendanceData();
+                renderAttendanceWeek();
+                updateAttendanceSummary();
+            }
+
+            function loadAttendanceData() {
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (!user) return;
+                
+                attendanceData = JSON.parse(localStorage.getItem(`attendance_${user.id}`)) || {};
+            }
+
+            function saveAttendanceData() {
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (!user) return;
+                
+                localStorage.setItem(`attendance_${user.id}`, JSON.stringify(attendanceData));
+            }
+
+            function renderAttendanceWeek() {
+                attendanceWeek.innerHTML = '';
+                
+                // Get current week dates
+                const today = new Date();
+                const currentDay = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
+                const startDate = new Date(today);
+                startDate.setDate(today.getDate() - currentDay + (currentDay === 0 ? -6 : 1)); // Start from Monday
+                
+                const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                
+                for (let i = 0; i < 7; i++) {
+                    const date = new Date(startDate);
+                    date.setDate(startDate.getDate() + i);
+                    
+                    const dateKey = formatDateKey(date);
+                    const attendanceStatus = attendanceData[dateKey] || 'none';
+                    
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'attendance-day';
+                    
+                    const dayNameElement = document.createElement('div');
+                    dayNameElement.className = 'day-name';
+                    dayNameElement.textContent = dayNames[i];
+                    
+                    const dayCircleElement = document.createElement('div');
+                    dayCircleElement.className = `day-circle ${attendanceStatus}`;
+                    dayCircleElement.textContent = date.getDate();
+                    dayCircleElement.setAttribute('data-date', dateKey);
+                    
+                    // Add click event to mark attendance
+                    dayCircleElement.addEventListener('click', () => {
+                        selectedDate = dateKey;
+                        openAttendanceStatusModal(date);
+                    });
+                    
+                    dayElement.appendChild(dayNameElement);
+                    dayElement.appendChild(dayCircleElement);
+                    attendanceWeek.appendChild(dayElement);
+                }
+            }
+
+            function formatDateKey(date) {
+                const year = date.getFullYear();
+                const month = date.getMonth() + 1;
+                const day = date.getDate();
+                return `${year}-${month}-${day}`;
+            }
+
+            function formatDateDisplay(date) {
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                return date.toLocaleDateString(undefined, options);
+            }
+
+            function updateAttendanceSummary() {
+                let presentCount = 0;
+                let absentCount = 0;
+                let leaveCount = 0;
+                let totalCount = 0;
+                
+                // Get current week dates
+                const today = new Date();
+                const currentDay = today.getDay();
+                const startDate = new Date(today);
+                startDate.setDate(today.getDate() - currentDay + (currentDay === 0 ? -6 : 1));
+                
+                for (let i = 0; i < 7; i++) {
+                    const date = new Date(startDate);
+                    date.setDate(startDate.getDate() + i);
+                    
+                    // Only count days up to today
+                    if (date > today) continue;
+                    
+                    const dateKey = formatDateKey(date);
+                    const status = attendanceData[dateKey] || 'none';
+                    
+                    if (status === 'present') presentCount++;
+                    else if (status === 'absent') absentCount++;
+                    else if (status === 'leave') leaveCount++;
+                    
+                    totalCount++;
+                }
+                
+                // Update counts
+                presentCountElement.textContent = presentCount;
+                absentCountElement.textContent = absentCount;
+                leaveCountElement.textContent = leaveCount;
+                
+                // Calculate and update percentage
+                const percentage = totalCount > 0 ? Math.round((presentCount / totalCount) * 100) : 0;
+                attendancePercentage.textContent = `${percentage}%`;
+            }
+
+            function openAttendanceStatusModal(date) {
+                attendanceStatusDate.textContent = formatDateDisplay(date);
+                attendanceStatusModal.classList.add('show');
+            }
+
+            // Attendance status modal event listeners
+            closeAttendanceStatusModalBtn.addEventListener('click', () => {
+                attendanceStatusModal.classList.remove('show');
+            });
+
+            attendanceStatusOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const status = option.getAttribute('data-status');
+                    if (selectedDate) {
+                        attendanceData[selectedDate] = status;
+                        saveAttendanceData();
+                        renderAttendanceWeek();
+                        updateAttendanceSummary();
+                        attendanceStatusModal.classList.remove('show');
+                        
+                        const statusText = status.charAt(0).toUpperCase() + status.slice(1);
+                        showNotification('success', 'Attendance Marked', `Your attendance has been marked as ${statusText}`);
+                    }
+                });
+            });
+
+            // Close modal when clicking outside
+            attendanceStatusModal.addEventListener('click', (e) => {
+                if (e.target === attendanceStatusModal) {
+                    attendanceStatusModal.classList.remove('show');
+                }
+            });
+
+            // View calendar button
+            viewCalendarBtn.addEventListener('click', () => {
+                openCalendarModal();
+            });
+
+            // Mark all present button
+            markAllPresentBtn.addEventListener('click', () => {
+                // Get current week dates
+                const today = new Date();
+                const currentDay = today.getDay();
+                const startDate = new Date(today);
+                startDate.setDate(today.getDate() - currentDay + (currentDay === 0 ? -6 : 1));
+                
+                for (let i = 0; i < 7; i++) {
+                    const date = new Date(startDate);
+                    date.setDate(startDate.getDate() + i);
+                    
+                    // Only mark days up to today
+                    if (date > today) continue;
+                    
+                    const dateKey = formatDateKey(date);
+                    attendanceData[dateKey] = 'present';
+                }
+                
+                saveAttendanceData();
+                renderAttendanceWeek();
+                updateAttendanceSummary();
+                
+                showNotification('success', 'Attendance Updated', 'All days this week have been marked as Present');
+            });
+
+            // Calendar Modal
+            function openCalendarModal() {
+                currentCalendarDate = new Date();
+                renderCalendar();
+                calendarModal.classList.add('show');
+            }
+
+            function closeCalendarModal() {
+                calendarModal.classList.remove('show');
+            }
+
+            function renderCalendar() {
+                const year = currentCalendarDate.getFullYear();
+                const month = currentCalendarDate.getMonth();
+                
+                // Set month and year in header
+                const monthNames = ["January", "February", "March", "April", "May", "June", 
+                                   "July", "August", "September", "October", "November", "December"];
+                calendarMonth.textContent = `${monthNames[month]} ${year}`;
+                
+                // Clear calendar grid
+                calendarGrid.innerHTML = '';
+                
+                // Add day headers
+                const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                dayHeaders.forEach(day => {
+                    const dayHeader = document.createElement('div');
+                    dayHeader.className = 'calendar-day-header';
+                    dayHeader.textContent = day;
+                    calendarGrid.appendChild(dayHeader);
+                });
+                
+                // Get first day of month and number of days
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                
+                // Add empty cells for days before the first day of the month
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.className = 'calendar-day other-month';
+                    calendarGrid.appendChild(emptyDay);
+                }
+                
+                // Add days of the month
+                const today = new Date();
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day';
+                    dayElement.textContent = day;
+                    
+                    // Check if this day is today
+                    if (year === today.getFullYear() && 
+                        month === today.getMonth() && 
+                        day === today.getDate()) {
+                        dayElement.classList.add('today');
+                    }
+                    
+                    // Check attendance status for this day
+                    const dateKey = `${year}-${month + 1}-${day}`;
+                    const attendanceStatus = attendanceData[dateKey] || 'none';
+                    if (attendanceStatus !== 'none') {
+                        dayElement.classList.add(attendanceStatus);
+                    }
+                    
+                    // Add click event to mark attendance
+                    dayElement.addEventListener('click', () => {
+                        selectedDate = dateKey;
+                        const date = new Date(year, month, day);
+                        openAttendanceStatusModal(date);
+                    });
+                    
+                    calendarGrid.appendChild(dayElement);
+                }
+            }
+
+            // Calendar navigation
+            prevMonthBtn.addEventListener('click', () => {
+                currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+                renderCalendar();
+            });
+
+            nextMonthBtn.addEventListener('click', () => {
+                currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+                renderCalendar();
+            });
+
+            // Close calendar modal
+            closeCalendarModalBtn.addEventListener('click', () => {
+                closeCalendarModal();
+            });
+
+            // Close modal when clicking outside
+            calendarModal.addEventListener('click', (e) => {
+                if (e.target === calendarModal) {
+                    closeCalendarModal();
+                }
+            });
+
+            // Helper functions
+            function showDashboard(user) {
+                signInPage.style.display = 'none';
+                signUpPage.style.display = 'none';
+                dashboard.style.display = 'block';
+               
+                // Update user info in navbar
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                userAvatar.textContent = initials;
+                userName.textContent = user.name;
+               
+                // Load user's selected subjects
+                loadUserSubjects();
+                
+                // Initialize attendance
+                initAttendance();
+                
+                // Initialize assignments
+                initAssignments();
+            }
+
+            function showSignInPage() {
+                dashboard.style.display = 'none';
+                signUpPage.style.display = 'none';
+                signInPage.style.display = 'flex';
+               
+                // Reset form
+                signInForm.reset();
+            }
+
+            function showError(elementId, message) {
+                const errorElement = document.getElementById(elementId);
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+
+            function clearErrors() {
+                const errorElements = document.querySelectorAll('.error-message');
+                errorElements.forEach(element => {
+                    element.style.display = 'none';
+                    element.textContent = '';
+                });
+            }
+
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            function showNotification(type, title, message) {
+                const notificationElement = document.getElementById('notification');
+                const iconElement = notificationElement.querySelector('.notification-icon i');
+                const titleElement = notificationElement.querySelector('.notification-title');
+                const messageElement = notificationElement.querySelector('.notification-message');
+               
+                // Set notification type
+                notificationElement.className = `notification ${type}`;
+               
+                // Set icon based on type
+                switch (type) {
+                    case 'success':
+                        iconElement.className = 'fas fa-check-circle';
+                        break;
+                    case 'error':
+                        iconElement.className = 'fas fa-exclamation-circle';
+                        break;
+                    case 'warning':
+                        iconElement.className = 'fas fa-exclamation-triangle';
+                        break;
+                    case 'info':
+                        iconElement.className = 'fas fa-info-circle';
+                        break;
+                }
+               
+                // Set title and message
+                titleElement.textContent = title;
+                messageElement.textContent = message;
+               
+                // Show notification
+                notificationElement.classList.add('show');
+               
+                // Hide notification after 5 seconds
+                setTimeout(() => {
+                    notificationElement.classList.remove('show');
+                }, 5000);
+            }
+
+            // Subject Selection Functions
+            function openSubjectModal() {
+                // Get user's selected subjects
+                const user = JSON.parse(localStorage.getItem('user'));
+                const userId = user.id;
+                const userSubjects = JSON.parse(localStorage.getItem(`userSubjects_${userId}`)) || [];
+                const userCustomSubjects = JSON.parse(localStorage.getItem(`userCustomSubjects_${userId}`)) || [];
+               
+                // Clear all checkboxes
+                subjectCheckboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+               
+                // Check the user's selected subjects
+                userSubjects.forEach(subjectName => {
+                    const checkbox = Array.from(subjectCheckboxes).find(cb => cb.value === subjectName);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                    }
+                });
+               
+                // Load custom subjects
+                customSubjects = [...userCustomSubjects];
+                renderCustomSubjects();
+               
+                // Show the modal
+                subjectModal.classList.add('show');
+            }
+
+            function closeSubjectModal() {
+                subjectModal.classList.remove('show');
+            }
+
+            function saveSelectedSubjects() {
+                const user = JSON.parse(localStorage.getItem('user'));
+                const userId = user.id;
+               
+                // Get selected predefined subjects
+                const selectedSubjects = [];
+                subjectCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        selectedSubjects.push(checkbox.value);
+                    }
+                });
+               
+                // Save to localStorage
+                localStorage.setItem(`userSubjects_${userId}`, JSON.stringify(selectedSubjects));
+                localStorage.setItem(`userCustomSubjects_${userId}`, JSON.stringify(customSubjects));
+               
+                // Update the progress display
+                updateProgressDisplay(selectedSubjects, customSubjects);
+                
+                // Update assignment subject options
+                populateSubjectOptions();
+               
+                // Close modal
+                closeSubjectModal();
+               
+                // Show notification
+                showNotification('success', 'Subjects Updated', 'Your subjects have been updated successfully');
+            }
+
+            function loadUserSubjects() {
+                const user = JSON.parse(localStorage.getItem('user'));
+                const userId = user.id;
+                const userSubjects = JSON.parse(localStorage.getItem(`userSubjects_${userId}`)) || [];
+                const userCustomSubjects = JSON.parse(localStorage.getItem(`userCustomSubjects_${userId}`)) || [];
+               
+                // If no subjects selected, show empty state
+                if (userSubjects.length === 0 && userCustomSubjects.length === 0) {
+                    showEmptyState();
+                } else {
+                    updateProgressDisplay(userSubjects, userCustomSubjects);
+                }
+            }
+
+            function updateProgressDisplay(predefinedSubjects, customSubjects) {
+                // Clear the progress content
+                progressContent.innerHTML = '';
+               
+                // Add progress items for each selected predefined subject
+                predefinedSubjects.forEach(subjectName => {
+                    const subjectData = availableSubjects[subjectName];
+                    if (subjectData) {
+                        const progressItem = createProgressItem(subjectName, subjectData.progress, subjectData.color);
+                        progressContent.appendChild(progressItem);
+                    }
+                });
+               
+                // Add progress items for each custom subject
+                customSubjects.forEach(subjectName => {
+                    // Generate a random color for custom subjects
+                    const randomColor = getRandomColor();
+                    // Set default progress for custom subjects
+                    const progressItem = createProgressItem(subjectName, 0, randomColor);
+                    progressContent.appendChild(progressItem);
+                });
+            }
+
+            function createProgressItem(subjectName, progress, color) {
+                const progressItem = document.createElement('div');
+                progressItem.className = 'progress-item';
+               
+                progressItem.innerHTML = `
+                    <div class="progress-item-header">
+                        <div class="progress-item-title">${subjectName}</div>
+                        <div class="progress-item-value">${progress}%</div>
+                        <button class="btn btn-sm btn-edit-marks" data-subject="${subjectName}" data-current-progress="${progress}">Edit Marks</button>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%; background-color: ${color};"></div>
+                    </div>
+                `;
+               
+                // Add event listener to the edit marks button
+                const editMarksBtn = progressItem.querySelector('.btn-edit-marks');
+                editMarksBtn.addEventListener('click', function() {
+                    const subjectName = this.getAttribute('data-subject');
+                    const currentProgress = this.getAttribute('data-current-progress');
+                    openEditMarksModal(subjectName, currentProgress);
+                });
+               
+                return progressItem;
+            }
+
+            function showEmptyState() {
+                progressContent.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="empty-state-title">No Subjects Selected</div>
+                        <div class="empty-state-description">
+                            You haven't selected any subjects yet. Click "Manage Subjects" to add your subjects and track your progress.
+                        </div>
+                        <button class="btn" id="emptyStateAddSubjects">Add Subjects</button>
+                    </div>
+                `;
+               
+                // Add event listener to the button
+                document.getElementById('emptyStateAddSubjects').addEventListener('click', () => {
+                    openSubjectModal();
+                });
+            }
+
+            function addCustomSubjectToList(subjectName) {
+                const customSubjectItem = document.createElement('div');
+                customSubjectItem.className = 'custom-subject-item';
+                customSubjectItem.innerHTML = `
+                    <div class="custom-subject-name">${subjectName}</div>
+                    <button class="btn-remove" data-subject="${subjectName}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+               
+                customSubjectList.appendChild(customSubjectItem);
+               
+                // Add event listener to remove button
+                customSubjectItem.querySelector('.btn-remove').addEventListener('click', function() {
+                    const subjectToRemove = this.getAttribute('data-subject');
+                    removeCustomSubject(subjectToRemove);
+                });
+            }
+
+            function removeCustomSubject(subjectName) {
+                // Remove from array
+                customSubjects = customSubjects.filter(subject => subject !== subjectName);
+               
+                // Re-render the list
+                renderCustomSubjects();
+               
+                showNotification('info', 'Subject Removed', `${subjectName} has been removed from your custom subjects`);
+            }
+
+            function renderCustomSubjects() {
+                // Clear the list
+                customSubjectList.innerHTML = '';
+               
+                // Add each custom subject to the list
+                customSubjects.forEach(subjectName => {
+                    addCustomSubjectToList(subjectName);
+                });
+            }
+
+            function getRandomColor() {
+                const colors = [
+                    '#4a6bdf', '#6c63ff', '#4caf50', '#8bc34a', '#cddc39',
+                    '#ffeb3b', '#ffc107', '#ff9800', '#ff5722', '#f44336',
+                    '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3',
+                    '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a'
+                ];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            // Edit Marks Functions
+            function openEditMarksModal(subjectName, currentProgress) {
+                editSubjectName.value = subjectName;
+                editMarks.value = currentProgress;
+                editMarksModal.classList.add('show');
+            }
+
+            function closeEditMarksModal() {
+                editMarksModal.classList.remove('show');
+            }
+
+            // Close notification when close button is clicked
+            document.querySelector('.notification-close').addEventListener('click', () => {
+                notification.classList.remove('show');
+            });
+        });
+    </script>
+</body>
+</html>
